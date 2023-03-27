@@ -5,7 +5,7 @@ import torch
 import argparse
 from torch.utils.data import DataLoader, Dataset
 from transformers import (
-    AutoTokenizer, AutoModelForCausalLM, AutoModelForSeq2SeqLM
+    T5ForConditionalGeneration, T5Tokenizer
 )
 import re
 from tqdm import tqdm
@@ -26,12 +26,12 @@ def load_model_tokenizer(tokenizer_name, tokenizer_revision, model_name, model_r
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # TOKENIZER LOAD
-    tokenizer = AutoTokenizer.from_pretrained(
+    tokenizer = T5Tokenizer.from_pretrained(
     f'{tokenizer_name}', revision=f'{tokenizer_revision}'
     )
 
     # MODEL LOAD
-    model = AutoModelForSeq2SeqLM.from_pretrained(
+    model = T5ForConditionalGeneration.from_pretrained(
     f'{model_name}', revision=f'{model_revision}',  
     ).to(device)
 
